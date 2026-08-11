@@ -100,3 +100,4 @@ html,body{max-width:100%;overflow-x:hidden}.main,.content,.briefing-wrap,.briefi
   .briefing-header .page-title{font-size:17px;line-height:1.25;margin:0 auto 8px;max-width:280px}
   .briefing-header{margin-bottom:16px}
 }
+.briefing-header .page-title{text-align:center;color:var(--olive)}.briefing-card .section-title,.briefing-card .taste-group h3{color:var(--olive)}
