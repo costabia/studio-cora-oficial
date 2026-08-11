@@ -85,3 +85,18 @@ html,body{max-width:100%;overflow-x:hidden}.main,.content,.briefing-wrap,.briefi
   .client-kanban-intro .eyebrow{font-size:17px;letter-spacing:1px}
   .portal-mobile-couple{display:inline}.portal-desktop-project{display:none}
 }
+ .briefing-mobile-bar{display:flex;height:72px;align-items:center;justify-content:center;background:var(--olive);margin:0 0 22px;padding:10px 18px;border-radius:0 0 14px 14px}
+ .briefing-mobile-bar img{width:150px;height:50px;object-fit:contain;filter:brightness(0) invert(1)}
+ .briefing-header .briefing-logo{display:none}
+@media(max-width:760px){
+  .kanban-col:first-child{max-height:330px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+  .kanban-col:first-child>.empty{display:grid;place-items:center;min-height:110px;text-align:center;width:100%}
+  .client-kanban-intro{border-top:3px solid var(--olive);padding-top:12px;margin-top:12px;margin-bottom:8px}
+  .client-kanban-intro .eyebrow{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--olive);text-transform:none;letter-spacing:.2px;margin-bottom:6px}
+  .client-kanban-intro .muted{margin-top:0}
+  .briefing-mobile-bar{height:62px;margin:0 -10px 18px;padding:8px 16px;border-radius:0}
+  .briefing-mobile-bar img{width:132px;height:46px;object-fit:contain;filter:brightness(0) invert(1)}
+  .briefing-header .briefing-logo{display:none}
+  .briefing-header .page-title{font-size:17px;line-height:1.25;margin:0 auto 8px;max-width:280px}
+  .briefing-header{margin-bottom:16px}
+}
