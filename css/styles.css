@@ -14,6 +14,7 @@
  .mobile-topbar-brand{display:none}.topbar-copy{min-width:0}.topbar-below{font-size:12px;color:var(--muted);margin-top:2px}.mobile-menu-toggle{display:none}
 /* Ajustes gerais de experiência em telas estreitas */
 html,body{max-width:100%;overflow-x:hidden}.main,.content,.briefing-wrap,.briefing-card,.form-grid{min-width:0}.topbar{min-height:64px;height:auto;padding:13px 24px}.content{padding:22px 28px}.tabs{scrollbar-width:none;touch-action:pan-x}.tabs::-webkit-scrollbar{display:none}.tab,.nav-item{flex:0 0 auto;cursor:pointer;touch-action:manipulation}.kanban{min-width:0;scrollbar-width:thin;overscroll-behavior-x:contain}.task-card{min-width:0;overflow-wrap:anywhere}
+ .portal-mobile-couple{display:none}
 @media(max-width:760px){
   .topbar{padding:9px 13px;min-height:54px;background:var(--olive);border-bottom:0;color:#fff;position:relative}.topbar .eyebrow,.topbar .page-title,.topbar-below{color:#fff}.topbar .page-title{font-size:18px}.topbar-below{font-size:10px;opacity:.82}.mobile-topbar-brand{display:flex;align-items:center;gap:9px;flex-shrink:0}.mobile-topbar-brand img{display:block;width:72px;height:30px;object-fit:contain;filter:brightness(0) invert(1)}.mobile-menu-toggle{display:grid;place-items:center;width:34px;height:34px;background:var(--olive-dark);color:#fff;border-radius:8px;font-size:21px;line-height:1}.topbar{gap:12px}.topbar-copy{flex:1}.content{padding:12px 12px 24px}.section-head{margin:12px 0 9px}.section-head .muted{font-size:11px;line-height:1.4}.client-kanban-intro{margin:2px 0 8px}.client-kanban-intro .muted{font-size:11px}
   .sidebar{position:fixed;z-index:30;inset:0 auto 0 0;width:255px;min-height:100vh;padding:18px 14px;transform:translateX(-105%);transition:transform .22s ease;overflow-y:auto;overflow-x:hidden;box-shadow:12px 0 30px rgba(0,0,0,.18)}.sidebar.open{transform:translateX(0)}.sidebar .brand{gap:8px;padding:0 4px 18px}.sidebar-logo{width:112px;max-height:46px}.brand-sub{font-size:8px}.sidebar .nav-label,.sidebar-footer{display:block}.sidebar .nav-item{display:flex;width:100%;font-size:12px;padding:11px 10px;margin:3px 0;border-radius:8px}.sidebar .nav-item span:first-child{display:block;width:18px}
@@ -54,4 +55,33 @@ html,body{max-width:100%;overflow-x:hidden}.main,.content,.briefing-wrap,.briefi
   .kanban{width:calc(100vw - 24px);max-width:none}
   .briefing-header .page-title{font-size:15px;letter-spacing:-.35px;white-space:nowrap}
   .choice-nameTypography .image-choice-frame{aspect-ratio:4 / 3}
+}
+/* Ajustes finais de identidade, exclusão e mobile */
+.task-delete{border:0;background:#fff2f0;color:var(--danger);border-radius:7px;padding:2px 7px;font-size:16px;line-height:1;cursor:pointer}.briefing-header .page-title{color:var(--olive)}.briefing-header .step-copy{padding-inline:28px}.briefing-logo{filter:none}
+@media(max-width:760px){
+  body{font-size:15px}.topbar{min-height:72px;height:72px;padding:10px 14px}.topbar:not(.has-mobile-portal) .topbar-copy{display:none}.topbar:not(.has-mobile-portal) .mobile-topbar-brand{display:grid;grid-template-columns:36px 1fr;grid-template-rows:32px auto;column-gap:10px;row-gap:1px;align-items:center}.topbar:not(.has-mobile-portal) .mobile-topbar-brand:after{content:'PAINEL ADMINISTRATIVO\A KANBAN GERAL';white-space:pre;grid-column:2;color:#fff;font-size:9px;line-height:1.25;letter-spacing:.7px;font-weight:700}.mobile-topbar-brand img{width:94px;height:38px}.topbar.has-mobile-portal{min-height:72px;height:72px;align-items:center}.topbar.has-mobile-portal .mobile-topbar-brand{display:flex;align-items:center;gap:10px}.topbar.has-mobile-portal .mobile-topbar-brand img{width:106px;height:44px}.topbar.has-mobile-portal .mobile-portal-label{display:none}.topbar .mobile-menu-toggle{width:36px;height:36px}.client-kanban-intro .eyebrow{display:block;color:var(--olive);font-size:14px;font-weight:700;letter-spacing:1.3px;margin-bottom:4px}.client-kanban-intro .muted{font-size:13px}.kanban{display:flex;flex-direction:column;gap:9px;overflow:visible}.kanban-col{min-height:0;padding:10px;border-radius:14px}.kanban-col .task-card{margin-bottom:7px;padding:12px}.kanban-col .col-head strong{font-size:14px}.kanban-col .count{font-size:11px}.task-card h4{font-size:14px}.task-card p{font-size:12px}.task-foot{font-size:12px}.option-grid{display:flex;flex-wrap:wrap;gap:5px}.option{padding:6px 8px;font-size:12px;gap:5px}.option input{margin:0}.briefing-header .step-copy{padding-inline:12px;font-size:12px}.briefing-header .page-title{font-size:22px}}
+/* Refinos finais do novo SVG e do layout mobile */
+.sidebar-logo,.pin-logo,.briefing-logo,.mobile-topbar-brand img{content:url('../assets/images/studio-cora-logo.svg')}
+@media(max-width:760px){
+  .kanban-scroll-hint{display:none!important}
+  .kanban{width:100%;max-width:100%;min-width:0;display:flex;flex-direction:column;gap:10px;overflow:visible}
+  .kanban-col{width:100%;min-width:0;max-width:100%;overflow:hidden;min-height:0}
+  .kanban-col .task-card{width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere}
+  .topbar:not(.has-mobile-portal){background:var(--cream);color:var(--ink);border-bottom:1px solid var(--line)}
+  .topbar:not(.has-mobile-portal) .mobile-topbar-brand{display:flex;align-items:center;gap:10px}
+  .topbar:not(.has-mobile-portal) .mobile-topbar-brand img{filter:none;width:100px;height:42px}
+  .topbar:not(.has-mobile-portal) .topbar-copy{display:block;order:2;min-width:0}
+  .topbar:not(.has-mobile-portal) .topbar-copy .eyebrow,.topbar:not(.has-mobile-portal) .topbar-copy .page-title{color:var(--ink)}
+  .topbar:not(.has-mobile-portal) .topbar-copy .eyebrow{font-size:9px;letter-spacing:1px}
+  .topbar:not(.has-mobile-portal) .topbar-copy .page-title{font-size:18px;margin-top:1px;white-space:nowrap}
+  .topbar:not(.has-mobile-portal) .mobile-topbar-brand:after{display:none}
+  .topbar.has-mobile-portal .mobile-topbar-brand img{filter:brightness(0) invert(1)}
+  .topbar.has-mobile-portal .mobile-topbar-brand{flex:1}
+  body{font-size:15px;line-height:1.55}
+  .content{padding-inline:14px}
+  .page-title{font-size:22px}
+  .section-title{font-size:18px}
+  .muted{font-size:13px}
+  .client-kanban-intro .eyebrow{font-size:17px;letter-spacing:1px}
+  .portal-mobile-couple{display:inline}.portal-desktop-project{display:none}
 }
