@@ -1,6 +1,7 @@
 // Integração opcional com Supabase.
 // Preencha os dois valores abaixo depois de criar o projeto no Supabase.
 // Nunca coloque aqui a secret/service_role key.
+import {findAvailableLocalAccessCode} from './access.js';
 
 
 const SUPABASE_URL = 'https://vvhmhgywoaboweyvowqj.supabase.co';
@@ -35,4 +36,12 @@ export async function cloudSave(payload){
   const {error}=await supabase.from('studio_cora_state').upsert({id:'main',payload:{...payload,session:null},updated_at:new Date().toISOString()});
   if(error) throw error;
   return true;
+}
+
+export async function cloudAllocateAccessCode(clientId,preferred,clients=[]){
+  const supabase=await getClient();
+  if(!supabase)return findAvailableLocalAccessCode(clients,preferred);
+  const {data,error}=await supabase.rpc('allocate_studio_cora_access_code',{p_client_id:clientId,p_preferred_code:preferred||null});
+  if(error)throw error;
+  return String(data||'');
 }

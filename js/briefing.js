@@ -1,6 +1,7 @@
 import {SEED} from './data.js';
 import {saveData,uid,hydrateData} from './storage.js';
-import {cloudConfigured,cloudSave} from './cloud.js';
+import {cloudConfigured,cloudSave,cloudAllocateAccessCode} from './cloud.js';
+import {legacyAccessCode,findAvailableLocalAccessCode} from './access.js';
 import {toast,esc} from './utils.js';
 
 let data,params,existingId,existing,KEY,saved,step=0;
@@ -32,6 +33,23 @@ function review(){return `<div class="review-item"><strong>Contato</strong><p>${
 async function submitForm(){if(!document.querySelector('#confirm').checked){toast('Confirme que as informações estão corretas.');return}let client=existing;if(client){Object.assign(client,{name:saved.brideName||client.name,couple:saved.couple||client.couple,email:saved.email||client.email,wedding:saved.wedding||client.wedding,venue:saved.venue||client.venue,briefing:'Completo',briefingData:{...saved}})}else{client={id:uid('c'),name:saved.brideName||saved.couple.split('&')[0].trim(),couple:saved.couple,email:saved.email,wedding:saved.wedding,venue:[saved.venue,saved.city].filter(Boolean).join(' · '),progress:0,status:'Novo briefing',briefing:'Completo',briefingData:{...saved},last:'Agora',avatar:(saved.brideName||saved.couple).split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase(),items:0,tasks:[],notes:''};data.clients.push(client)}data.notifications.unshift({id:uid('n'),text:`Novo briefing recebido de ${client.name}`,time:'agora',type:'briefing'});saveData(data);try{if(cloudConfigured())await cloudSave(data)}catch(error){console.warn('Briefing salvo localmente; sincronização remota pendente.',error)}localStorage.setItem(KEY,JSON.stringify(saved));document.querySelector('#briefing-app').innerHTML=`<div class="briefing-wrap"><section class="briefing-card" style="text-align:center;padding:60px 25px"><div style="font-size:42px;color:var(--olive)">✦</div><h1 class="page-title">Formulário enviado com carinho</h1><p class="step-copy">Obrigada por compartilhar tantos detalhes. A STUDIO CORA recebeu o briefing de ${esc(client.couple)} e em breve entraremos em contato.</p></section></div>`}
 async function boot(){data=await hydrateData(SEED);params=new URLSearchParams(location.search);existingId=params.get('cliente');existing=existingId?data.clients.find(c=>c.id===existingId):null;KEY=`briefing-${existingId||'novo'}`;saved=JSON.parse(localStorage.getItem(KEY)||JSON.stringify(existing?.briefingData||{}));render()}
 document.addEventListener('change',e=>{if(!e.target.matches('input[name="monograms-aquarela"],input[name="monograms-liso"]'))return;const aqua=[...document.querySelectorAll('input[name="monograms-aquarela"]')],liso=[...document.querySelectorAll('input[name="monograms-liso"]')],hasAqua=aqua.some(x=>x.checked),hasLiso=liso.some(x=>x.checked);liso.forEach(x=>{x.disabled=hasAqua;x.closest('.image-choice')?.classList.toggle('is-disabled',hasAqua)});aqua.forEach(x=>{x.disabled=hasLiso;x.closest('.image-choice')?.classList.toggle('is-disabled',hasLiso)})});
+async function submitForm(){
+  if(!document.querySelector('#confirm').checked){toast('Confirme que as informações estão corretas.');return}
+  let client=existing;
+  if(client){
+    Object.assign(client,{name:saved.brideName||client.name,couple:saved.couple||client.couple,email:saved.email||client.email,wedding:saved.wedding||client.wedding,venue:saved.venue||client.venue,briefing:'Completo',briefingData:{...saved}});
+    if(!client.accessCode)client.accessCode=legacyAccessCode(client.wedding);
+  }else{
+    client={id:uid('c'),name:saved.brideName||saved.couple.split('&')[0].trim(),couple:saved.couple,email:saved.email,wedding:saved.wedding,accessCode:'',venue:[saved.venue,saved.city].filter(Boolean).join(' · '),progress:0,status:'Novo briefing',briefing:'Completo',briefingData:{...saved},last:'Agora',avatar:(saved.brideName||saved.couple).split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase(),items:0,tasks:[],notes:''};
+    try{client.accessCode=await cloudAllocateAccessCode(client.id,legacyAccessCode(client.wedding),data.clients)}catch(error){console.warn('Backend access-code allocation unavailable; using local fallback.',error);client.accessCode=findAvailableLocalAccessCode(data.clients,legacyAccessCode(client.wedding))}
+    data.clients.push(client);
+  }
+  data.notifications.unshift({id:uid('n'),text:`Novo briefing recebido de ${client.name}`,time:'agora',type:'briefing'});
+  saveData(data);
+  try{if(cloudConfigured())await cloudSave(data)}catch(error){console.warn('Briefing salvo localmente; sincronização remota pendente.',error)}
+  localStorage.setItem(KEY,JSON.stringify(saved));
+  document.querySelector('#briefing-app').innerHTML=`<div class="briefing-wrap"><section class="briefing-card" style="text-align:center;padding:60px 25px"><div style="font-size:42px;color:var(--olive)">✦</div><h1 class="page-title">Formulário enviado com carinho</h1><p class="step-copy">Obrigada por compartilhar tantos detalhes. A STUDIO CORA recebeu o briefing de ${esc(client.couple)} e em breve entraremos em contato.</p><p class="step-copy">Seu código de acesso é <strong>${esc(client.accessCode)}</strong>.</p></section></div>`;
+}
 boot();
 
 
