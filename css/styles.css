@@ -2658,3 +2658,31 @@ body {
 .briefing-card .taste-group h3 {
   color: var(--olive)
 }
+
+.app-loader {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--olive);
+  background: var(--cream);
+  font: 500 13px var(--font-body);
+}
+
+.loader-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--olive);
+  border-radius: 50%;
+  font-size: 22px;
+  animation: loader-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes loader-pulse {
+  0%, 100% { opacity: .45; transform: scale(.92); }
+  50% { opacity: 1; transform: scale(1); }
+}
