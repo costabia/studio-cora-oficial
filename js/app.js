@@ -5,6 +5,7 @@ import {esc,toast} from './utils.js';
 import {sidebar,topbar,modal,clientCard} from './components.js';
 import {kanban,bindDrag} from './kanban.js';
 import {getRoute,go} from './router.js';
+import {briefingMedia} from './briefing-media.js';
 
 let data=loadData(SEED);let user=data.session?.role?data.session:null;let selected=data.clients[0]?.id;const app=document.querySelector('#app');
 const persist=(sync=true)=>saveData(data,{sync});
@@ -34,6 +35,23 @@ function settings(){layout('Configurações');document.querySelector('#view').in
 function render(){if(!user)return login();if(user.role==='client'){selected=user.clientId;return project()}const r=getRoute();if(r==='dashboard'){go('kanban');return}if(r==='clients')clients();else if(r==='settings')settings();else if(r==='project')project();else generalKanban()}
 window.addEventListener('hashchange',render);
 hydrateData(SEED).then(remote=>{data=remote;user=data.session?.role?data.session:null;selected=data.clients[0]?.id;render()});
+
+const briefingDetailsText=briefingDetails;
+briefingDetails=(client)=>{
+  const base=briefingDetailsText(client);
+  const groups=[
+    ['monograms-aquarela','Monogramas · Aquarela'],
+    ['monograms-liso','Monogramas · Liso'],
+    ['visual','Estilo visual'],
+    ['communication','Comunicação visual'],
+    ['detailTechnique','Detalhes'],
+    ['fonts','Tipografia'],
+    ['nameTypography','Tipografia dos nomes']
+  ];
+  const cards=groups.flatMap(([key,title])=>briefingMedia(key,client.briefingData?.[key]).map(item=>({title,...item})));
+  if(!cards.length)return base;
+  return `${base}<section class="panel card briefing-visual-summary"><div class="panel-head"><div><h3>Referências selecionadas</h3><p class="muted">Imagens correspondentes às escolhas feitas no briefing.</p></div></div><div class="briefing-visual-grid">${cards.map(item=>`<figure class="briefing-visual-card"><img src="${item.src}" alt="${esc(item.label)}"><figcaption><small>${esc(item.title)}</small><strong>${esc(item.label)}</strong></figcaption></figure>`).join('')}</div></section>`;
+};
 
 
 

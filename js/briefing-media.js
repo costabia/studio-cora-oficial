@@ -1,0 +1,11 @@
+const media={
+  'monograms-aquarela':{vintage:['Vintage','assets/images/monogram-2-vintage.png'],serif:['Serifa','assets/images/monogram-3-serif.png']},
+  'monograms-liso':{limpo:['Limpo','assets/images/monogram-5-clean.png'],vitoriano:['Vitoriano','assets/images/monogram-6-victorian.png'],entrelacado:['Entrelaçado','assets/images/monogram-4-interlaced.png'],brasaodecorado:['Brasão decorado','assets/images/monogram-7-ornate.png'],brasaosimples:['Brasão simples','assets/images/monogram-8-simple.png']},
+  visual:{romantico:['Romântico','assets/images/taste-01-romantico.png'],tropical:['Tropical','assets/images/taste-02-tropical.jpg'],classico:['Clássico','assets/images/taste-03-classico.png'],bohochic:['Boho Chic','assets/images/taste-04-boho-chic.png'],minimalista:['Minimalista','assets/images/taste-05-minimalista.jpg'],vintage:['Vintage','assets/images/taste-06-vintage.png'],toscana:['Toscana','assets/images/taste-07-toscana.jpg']},
+  communication:{minimalista:['Minimalista','assets/images/taste-08-minimalista.png'],sofisticado:['Sofisticado','assets/images/taste-09-sofisticado.png'],romantico:['Romântico','assets/images/taste-10-romantico.png'],leveza:['Leveza','assets/images/taste-11-leveza.png'],criativo:['Criativo','assets/images/taste-12-criativo.png']},
+  detailTechnique:{fineline:['Fine Line','assets/images/taste-13-fineline.png'],aquarela:['Aquarela','assets/images/taste-14-aquarela.png']},
+  fonts:{classicocomserifa:['Clássico com serifa','assets/images/taste-15-serif.png'],modernosemserifa:['Moderno sem serifa','assets/images/taste-16-sans.png'],escritoamao:['Escrito à mão','assets/images/taste-17-script.png'],serifaminuscula:['Serifa minúscula','assets/images/taste-18-lowercase-serif.png']},
+  nameTypography:{manuscrita:['Manuscrita','assets/images/taste-19-name-script.png'],naomanuscrita:['Não manuscrita','assets/images/taste-20-name-non-script.png']}
+};
+const normalize=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+export function briefingMedia(key,value){const group=media[key];if(!group)return [];const values=Array.isArray(value)?value:[value];return values.map(item=>group[normalize(item)]).filter(Boolean).map(([label,src])=>({label,src}));}

@@ -2686,3 +2686,43 @@ body {
   0%, 100% { opacity: .45; transform: scale(.92); }
   50% { opacity: 1; transform: scale(1); }
 }
+
+.briefing-visual-summary {
+  margin-top: 18px;
+}
+
+.briefing-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
+}
+
+.briefing-visual-card {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--cream);
+}
+
+.briefing-visual-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.briefing-visual-card figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 9px 10px 11px;
+}
+
+.briefing-visual-card small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.briefing-visual-card strong {
+  font-size: 12px;
+}
